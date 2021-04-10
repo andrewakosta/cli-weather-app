@@ -16,11 +16,17 @@ const main = async()=>{
                 const id = await listPlacesAsMenu(places);
 
                 const placeSelected = places.find(place => place.id === id)
-
+                const weather = await Searches.getWeatherByLatAndLong(placeSelected.lat, placeSelected.log);
+                
+               
                 console.log('\n Place Imformation \n'.yellow);
-                console.log(' City: ' + placeSelected.name);
-                console.log(' Latitud: ' + placeSelected.lat);
-                console.log(' Longitud: ' + placeSelected.log);
+                console.log(' City: '.yellow.bold + placeSelected.name);
+                console.log(' Latitud: '.yellow.bold + placeSelected.lat);
+                console.log(' Longitud: '.yellow.bold + placeSelected.log);
+                console.log(' Temperature: '.yellow.bold + weather.temp);
+                console.log(' Minima: '.yellow.bold + weather.min);
+                console.log(' Maxima: '.yellow.bold + weather.max);
+                console.log(' Weather status: '.yellow.bold+ weather.desc);
 
                 break;
         

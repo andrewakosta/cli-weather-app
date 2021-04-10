@@ -76,7 +76,7 @@ exports.listPlacesAsMenu = async (places = []) => {
         { 
             type:'list',
             name:'id',
-            message:'Choise a place',
+            message:'Choose a place',
             choices
         }
     ]
