@@ -1,13 +1,26 @@
-const { readInput, inquirerMenu, pausa } = require("./helpers/inquirer")
+const { readInput, inquirerMenu, pausa } = require("./helpers/inquirer");
+const Serches = require("./models/searches");
 
 const main = async()=>{
     let option;
+    const Searches = new Serches();
     do {
         option = await  inquirerMenu();
-        console.log(option);
+        
+        switch (option) {
+            case 1:
+                const place = await readInput("City: ");
+                const places  = Searches.city(place);
+                console.log(places);
 
-        if(option !== 0 ) await pausa
-        console.clear()
+                break;
+        
+            default:
+                break;
+        }
+        if(option !== 0 ) await pausa()
+        console.clear();
+        
     } while (option !== 0);
 }
 
