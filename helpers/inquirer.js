@@ -60,12 +60,12 @@ exports.readInput = async (message) => {
     return desc;
 }
 
-exports.listTaskAsMenu = async (tasks = []) => {
-    const choices = tasks.map((task, index) => {
+exports.listPlacesAsMenu = async (places = []) => {
+    const choices = places.map((place, index) => {
         const idx = `${index + 1}`.green
         return {
-            value: task.id,
-            name: `${idx} ${task.desc}`
+            value: place.id,
+            name: `${idx} ${place.name}`
         }
     });
     choices.unshift({
@@ -76,7 +76,7 @@ exports.listTaskAsMenu = async (tasks = []) => {
         { 
             type:'list',
             name:'id',
-            message:'Remove task',
+            message:'Choise a place',
             choices
         }
     ]
