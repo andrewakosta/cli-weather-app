@@ -8,7 +8,7 @@ class Serches {
     }
     get paramsMapbox() {
         return {
-            'access_token': 'pk.eyJ1IjoiYW5kcmV3YWtvc3RhIiwiYSI6ImNrbmMyamZjaTB6amoyeG9oOHd0N2xiZTQifQ.NOgpg4o9phJCoqLonketjg',
+            'access_token':process.env.MAPBOX_KEY,
             'limit': 5,
             'language': 'es'
         }
