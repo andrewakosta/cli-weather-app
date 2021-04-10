@@ -10,7 +10,7 @@ const main = async()=>{
         switch (option) {
             case 1:
                 const place = await readInput("City: ");
-                const places  = Searches.city(place);
+                const places  = await Searches.city(place);
                 console.log(places);
 
                 break;
