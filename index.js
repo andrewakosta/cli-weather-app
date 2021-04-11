@@ -33,9 +33,9 @@ const main = async () => {
 
                 break;
             case 2:
-                Searches.history.forEach((item, index)=>{
+                Searches.historyCapitalized.forEach((item, index)=>{
                     console.log(index++ +'. ' + item);
-                })
+                }) 
                 break
             default:
                 break;

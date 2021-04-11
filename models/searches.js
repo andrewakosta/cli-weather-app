@@ -30,52 +30,59 @@ class Serches {
             lat: place.center[1]
         }))
     }
-    get weatherAPIParams(){
+    get weatherAPIParams() {
         return {
-            'appid':process.env.OPEN_WEATHER,
-            'units':'metric',
-            'lang':'en'
+            'appid': process.env.OPEN_WEATHER,
+            'units': 'metric',
+            'lang': 'en'
         }
 
     }
-    async getWeatherByLatAndLong(lat, lon){
+    get historyCapitalized() {
+        return this.history.map(place => {
+            let words = place.split(' ');
+            words = words.map(letter => letter[0].toUpperCase() + letter.substring(1));
+            return  words.join(' ');
+        })
+    }
+    async getWeatherByLatAndLong(lat, lon) {
         try {
             const instance = axios.create({
-                baseURL:'https://api.openweathermap.org/data/2.5/weather',
-                params:{...this.weatherAPIParams, lat, lon}
+                baseURL: 'https://api.openweathermap.org/data/2.5/weather',
+                params: { ...this.weatherAPIParams, lat, lon }
             })
             const res = await instance.get();
-            const {weather, main} = res.data
+            const { weather, main } = res.data
 
             return {
-                desc:weather[0].description,
-                min:main.temp_min,
-                max:main.temp_max,
-                temp:main.temp
+                desc: weather[0].description,
+                min: main.temp_min,
+                max: main.temp_max,
+                temp: main.temp
             }
         } catch (error) {
             console.log(error.toString());
         }
     }
-    addHistory(place = ''){
-        if(this.history.includes(place.toLowerCase())) return;
+    addHistory(place = '') {
+        if (this.history.includes(place.toLowerCase())) return;
 
-        this.history = this.history.splice(0,5);
+        this.history = this.history.splice(0, 5);
         this.history.unshift(place.toLowerCase())
         this.saveDB()
     }
-    saveDB(){
-        const payload ={
-            history:this.history, 
+    saveDB() {
+        const payload = {
+            history: this.history,
         }
 
         fs.writeFileSync(this.DB_PATH, JSON.stringify(payload))
-        
+
     }
-    readDB(){
-        if(!fs.existsSync(this.DB_PATH))return;
-        const data = JSON.parse(fs.readFileSync(this.DB_PATH, {encoding:'utf-8'}));
-        this.history = data
+    readDB() {
+        if (!fs.existsSync(this.DB_PATH)) return;
+        const data = JSON.parse(fs.readFileSync(this.DB_PATH, { encoding: 'utf-8' }));
+        this.history = data.history
     }
 }
 
