@@ -1,10 +1,13 @@
+const fs = require('fs')
 const { default: axios } = require("axios");
 
 
 class Serches {
 
     constructor() {
-        //Read DB
+        this.history = [];
+        this.DB_PATH = './db/database.json';
+        this.readDB();
     }
     get paramsMapbox() {
         return {
@@ -53,6 +56,26 @@ class Serches {
         } catch (error) {
             console.log(error.toString());
         }
+    }
+    addHistory(place = ''){
+        if(this.history.includes(place.toLowerCase())) return;
+
+        this.history = this.history.splice(0,5);
+        this.history.unshift(place.toLowerCase())
+        this.saveDB()
+    }
+    saveDB(){
+        const payload ={
+            history:this.history, 
+        }
+
+        fs.writeFileSync(this.DB_PATH, JSON.stringify(payload))
+        
+    }
+    readDB(){
+        if(!fs.existsSync(this.DB_PATH))return;
+        const data = JSON.parse(fs.readFileSync(this.DB_PATH, {encoding:'utf-8'}));
+        this.history = data
     }
 }
 
